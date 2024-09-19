@@ -1,101 +1,110 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState } from 'react'
+import { useTheme } from 'next-themes'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Sun, Moon, AlertCircle, Loader2 } from 'lucide-react'
+import ProfileCard from '@/components/ProfileCard'
+import RepositoryList from '@/components/RepositoryList'
+import { UserProfile, Repository, CommitData } from '@/types'
+
+export default function GitHubProfileAnalyzer() {
+  const [username, setUsername] = useState('')
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
+  const [repos, setRepos] = useState<Repository[]>([])
+  const [commitData, setCommitData] = useState<CommitData[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const { theme, setTheme } = useTheme()
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+    try {
+      const userResponse = await fetch(`https://api.github.com/users/${username}`)
+      if (!userResponse.ok) {
+        throw new Error(`O usuário ${username} não existe no Github!`)
+      }
+      const userData = await userResponse.json()
+      setUserProfile(userData)
+      
+      const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
+      if (!reposResponse.ok) {
+        throw new Error('Failed to fetch repositories')
+      }
+      const reposData = await reposResponse.json()
+      setRepos(reposData)
+
+      const today = new Date()
+      const oneYearAgo = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate())
+      const commitData = []
+      for (let d = oneYearAgo; d <= today; d.setDate(d.getDate() + 1)) {
+        commitData.push({
+          day: d.toISOString().split('T')[0],
+          value: Math.floor(Math.random() * 10)
+        })
+      }
+      setCommitData(commitData)
+    } catch (err) {
+      setError((err as Error).message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="container mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-200">Analisador de Perfil GitHub</h1>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          aria-label={`Alternar para tema ${theme === 'dark' ? 'claro' : 'escuro'}`}
+        >
+          {theme === 'dark' ? <Sun className="h-6 w-6 " /> : <Moon className="h-6 w-6" />}
+        </Button>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <form onSubmit={handleSubmit} className="mb-8">
+        <div className="flex gap-2">
+          <Input
+            type="text"
+            placeholder="Nome de usuário do GitHub"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="flex-grow text-zinc-700 dark:text-zinc-400 border-zinc-400 outline-none"
+            aria-label="Nome de usuário do GitHub"
+          />
+          <Button type="submit" disabled={loading}>
+            {loading ? 
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Buscando...
+              </> : 
+              "Analisar Perfil"
+            }
+          </Button>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </form>
+
+      {error && (
+        <div className="text-rose-500 mb-4 flex items-center">
+          <AlertCircle className="mr-2" />
+          <span className='font-regular text-2xl'>{error}</span>
+        </div>
+      )}
+
+      {userProfile && <ProfileCard userProfile={userProfile} />}
+
+      {repos.length > 0 && (
+        <>
+          <RepositoryList repos={repos} />
+        </>
+      )}
     </div>
-  );
+  )
 }
