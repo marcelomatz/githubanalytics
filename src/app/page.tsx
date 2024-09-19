@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,21 +32,22 @@ export default function GitHubProfileAnalyzer() {
       
       const reposResponse = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=100`)
       if (!reposResponse.ok) {
-        throw new Error('Failed to fetch repositories')
+        throw new Error('Falha ao buscar repositórios')
       }
       const reposData = await reposResponse.json()
       setRepos(reposData)
 
+      // Simulação de dados de commit (substitua por dados reais quando possível)
       const today = new Date()
       const oneYearAgo = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate())
-      const commitData = []
+      const simulatedCommitData = []
       for (let d = oneYearAgo; d <= today; d.setDate(d.getDate() + 1)) {
-        commitData.push({
+        simulatedCommitData.push({
           day: d.toISOString().split('T')[0],
           value: Math.floor(Math.random() * 10)
         })
       }
-      setCommitData(commitData)
+      setCommitData(simulatedCommitData)
     } catch (err) {
       setError((err as Error).message)
     } finally {
@@ -103,6 +104,7 @@ export default function GitHubProfileAnalyzer() {
       {repos.length > 0 && (
         <>
           <RepositoryList repos={repos} />
+          
         </>
       )}
     </div>

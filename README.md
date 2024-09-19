@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Analisador de Perfil GitHub
 
-## Getting Started
+## Descrição
+Este aplicativo é um analisador de perfil do GitHub que permite aos usuários visualizar informações detalhadas sobre perfis do GitHub, incluindo dados do usuário, repositórios e um gráfico de commits.
 
-First, run the development server:
+## Funcionalidades
+- Busca de perfis de usuário do GitHub
+- Exibição de informações detalhadas do perfil do usuário
+- Lista de repositórios do usuário
+- Gráfico de calor de commits do último ano
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tecnologias Utilizadas
+- **Next.js**: Framework React para renderização do lado do servidor e geração de sites estáticos
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário
+- **TypeScript**: Superset tipado de JavaScript
+- **Tailwind CSS**: Framework CSS para design responsivo e customizável
+- **React Calendar Heatmap**: Biblioteca para criação do gráfico de commits
+- **React Tooltip**: Para adicionar tooltips interativos
+- **API do GitHub**: Para buscar dados de usuários e repositórios
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estrutura do Projeto
+/
+├── src/
+│ ├── app/
+│ │ └── page.tsx
+│ ├── components/
+│ │ ├── CommitGraph.tsx
+│ │ ├── ProfileCard.tsx
+│ │ └── RepositoryList.tsx
+│ └── types.ts
+├── public/
+├── styles/
+│ └── globals.css
+├── package.json
+└── tsconfig.json
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configuração e Instalação
+1. Clone o repositório
+2. Instale as dependências:
+   ```
+   npm install
+   ```
+   ou
+   ```
+   yarn install
+   ```
+3. Crie um arquivo `.env.local` na raiz do projeto e adicione sua chave de API do GitHub:
+   ```
+   GITHUB_ACCESS_TOKEN=seu_token_aqui
+   ```
+4. Execute o servidor de desenvolvimento:
+   ```
+   npm run dev
+   ```
+   ou
+   ```
+   yarn dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Como Usar
+1. Abra o aplicativo no navegador
+2. Digite o nome de usuário do GitHub na barra de pesquisa
+3. Pressione Enter ou clique no botão de busca
+4. Visualize as informações do perfil, lista de repositórios e gráfico de commits
 
-## Learn More
+## Deploy
+Este aplicativo pode ser facilmente implantado na Vercel:
+1. Faça push do código para um repositório GitHub
+2. Conecte o repositório à sua conta Vercel
+3. A Vercel detectará automaticamente as configurações do Next.js e fará o deploy
 
-To learn more about Next.js, take a look at the following resources:
+Lembre-se de configurar as variáveis de ambiente necessárias no painel da Vercel antes do deploy.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribuições
+Contribuições são bem-vindas! Por favor, abra uma issue para discutir mudanças maiores antes de criar um pull request.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licença
+[MIT](https://choosealicense.com/licenses/mit/)

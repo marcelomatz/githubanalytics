@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Star, GitFork, Code, Calendar, Eye, GitBranch, Lock, Unlock, FileCode, Scale, MessageSquare, Grid, List, BarChart } from 'lucide-react'
+import { Star, GitFork, Code, Calendar, Eye, GitBranch, FileCode, Scale, MessageSquare, Grid, List, BarChart } from 'lucide-react'
 import { Repository } from '@/types'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
