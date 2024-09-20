@@ -34,7 +34,7 @@ export default function Home() {
             className="flex-grow"
             aria-label="Nome de usuário do GitHub"
           />
-          <Button type="submit">
+          <Button type="submit" className="bg-slate-100/90 text-slate-900 dark:bg-slate-900/90 dark:text-slate-200 hover:bg-slate-100/70">
             Analisar Perfil
           </Button>
         </div>

@@ -1,4 +1,4 @@
-"use client"; // Este componente é um componente de cliente
+"use client"; 
 
 import { useState, useEffect } from 'react';
 import Header from './Header';

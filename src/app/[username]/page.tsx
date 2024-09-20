@@ -66,10 +66,10 @@ export default function UserPage({ params }: { params: { username: string } }) {
           
           {/* Skeleton para o RepositoryList */}
           <div>
-            <Skeleton className="h-8 w-48 mb-4" />
+            <Skeleton className="h-58 w-48 mb-4" />
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {[...Array(6)].map((_, index) => (
-                <div key={index} className="border rounded-xl p-4">
+                <div key={index} className="rounded-xl p-4">
                   <Skeleton className="h-6 w-3/4 mb-2" />
                   <Skeleton className="h-4 w-full mb-4" />
                   <div className="flex justify-between">
