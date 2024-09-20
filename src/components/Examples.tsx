@@ -9,11 +9,11 @@ const techCompanies = [
   { name: "Netflix", logo: "https://github.com/netflix.png" },
   { name: "Apple", logo: "https://github.com/apple.png" },
   { name: "IBM", logo: "https://github.com/IBM.png" },
-  { name: "Intel", logo: "https://github.com/intel.png" },
+  { name: "Nvidia", logo: "https://github.com/nvidia.png" },
   { name: "Cisco", logo: "https://github.com/cisco.png" },
   { name: "Oracle", logo: "https://github.com/oracle.png" },
   { name: "Samsung", logo: "https://github.com/samsung.png" },
-  { name: "LinkedIn", logo: "https://github.com/linkedin.png" },
+  { name: "BlueSky", logo: "https://github.com/bluesky-social.png" },
   { name: "Snapchat", logo: "https://github.com/snapchat.png" },
   { name: "Pinterest", logo: "https://github.com/pinterest.png" },
   { name: "Reddit", logo: "https://github.com/reddit.png" },
@@ -34,10 +34,11 @@ function CompanyGrid({ companies }: { companies: any[] }) {
               className="bg-primary text-primary-foreground border-0"
             >
               <CardContent className="flex flex-col items-center justify-center p-6">
-                <Avatar className="w-24 h-24 mb-4">
+                <Avatar className="w-11 h-auto mb-2 items-center justify-center">
                   <AvatarImage
                     src={company.logo}
                     alt={`${company.name} logo`}
+                    className="items-center justify-center"
                   />
                   <AvatarFallback>{company.name[0]}</AvatarFallback>
                 </Avatar>

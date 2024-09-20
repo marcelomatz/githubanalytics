@@ -7,12 +7,12 @@ interface RepositoryCardProps {
 
 const RepositoryCard: React.FC<RepositoryCardProps> = ({ repo }) => {
   return (
-    <Card className="flex items-center justify-between mx-auto mb-16">
+    <Card className="flex dark:bg-background items-center justify-between mx-auto mb-16">
       <CardHeader className="justify-center">
         <h2 className="text-xl font-bold">{repo.name}</h2>
-        <p className="text-gray-600">{repo.description}</p>
+        <p className="text-foreground">{repo.description}</p>
         <a href={repo.html_url} target="_blank" className="text-blue-500 hover:underline">
-          Ver no GitHub
+          Ver {repo.name} no GitHub
         </a>
       </CardHeader>
       <div className="flex flex-col mx-auto">

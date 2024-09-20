@@ -16,8 +16,8 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Analisador de Perfil do Github",
-  description: "Veja o perfil e os principais repositórios dos usuários",
+  title: "GitHub Explorer",
+  description: "Explore repositórios do GitHub com facilidade e estilo",
 };
 
 export default function RootLayout({
