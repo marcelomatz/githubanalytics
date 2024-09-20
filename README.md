@@ -18,22 +18,6 @@ Este aplicativo é um analisador de perfil do GitHub que permite aos usuários v
 - **React Tooltip**: Para adicionar tooltips interativos
 - **API do GitHub**: Para buscar dados de usuários e repositórios
 
-## Estrutura do Projeto
-/
-├── src/
-│ ├── app/
-│ │ └── page.tsx
-│ ├── components/
-│ │ ├── CommitGraph.tsx
-│ │ ├── ProfileCard.tsx
-│ │ └── RepositoryList.tsx
-│ └── types.ts
-├── public/
-├── styles/
-│ └── globals.css
-├── package.json
-└── tsconfig.json
-
 ## Configuração e Instalação
 1. Clone o repositório
 2. Instale as dependências:
