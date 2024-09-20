@@ -17,8 +17,8 @@ export default function Home() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <form onSubmit={handleSubmit} className="mb-8">
+    <div className="flex flex-col max-w-7xl mx-auto px-4 xl:px-0">
+      <form onSubmit={handleSubmit} className="">
         <div className="flex gap-2">
           <Input
             type="text"
@@ -29,7 +29,7 @@ export default function Home() {
             className="flex-grow"
             aria-label="Nome de usuário do GitHub"
           />
-          <Button type="submit" className="bg-zinc-900 text-zinc-200 hover:bg-zinc-700 dark:bg-zinc-800">
+          <Button type="submit" className="bg-primary text-primary-foreground">
             Analisar Perfil
           </Button>
         </div>

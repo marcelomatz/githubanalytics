@@ -28,9 +28,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-100/80 dark:bg-slate-900/10`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen items-center justify-center`}
       >
         <ThemeManager>
+          
           {children}
           <Footer />
         </ThemeManager>

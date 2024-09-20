@@ -22,7 +22,7 @@ function CompanyGrid({ companies }: { companies: any[] }) {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {companies.map((company) => (
           <Link href={`/${company.name}`}>
-            <Card key={company.name} className="bg-zinc-800 text-white border-0 dark:bg-zinc-200 dark:text-zinc-900 hover:shadow-xl transition-shadow duration-300">
+            <Card key={company.name} className="bg-primary text-primary-foreground border-0 dark:bg-zinc-200 dark:text-zinc-900 hover:shadow-xl transition-shadow duration-300">
               <CardContent className="flex flex-col items-center justify-center p-6">
                 <Avatar className="w-24 h-24 mb-4">
                   <AvatarImage src={company.logo} alt={`${company.name} logo`} />
@@ -40,7 +40,7 @@ function CompanyGrid({ companies }: { companies: any[] }) {
 
 export default function Examples() {
   return (
-    <div className="container mx-auto py-8">
+    <div className="flex flex-col w-full max-w-7xl mx-auto py-10">
       <CompanyGrid companies={techCompanies} />
       <CompanyGrid companies={devCompanies} />
     </div>

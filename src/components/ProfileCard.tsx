@@ -20,7 +20,7 @@ export default function ProfileCard({ userProfile }: ProfileCardProps) {
     <Card className="mb-8 bg-zinc-200 dark:bg-zinc-900">
       <CardHeader>
         <CardTitle className="flex items-center gap-4">
-          <Avatar className="h-16 w-16">
+          <Avatar className="h-16 w-16 bg-background dark:bg-foreground">
             <AvatarImage src={userProfile.avatar_url} alt={userProfile.name || userProfile.login} />
             <AvatarFallback>{userProfile.login.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>

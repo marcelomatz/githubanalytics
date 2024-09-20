@@ -53,7 +53,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
 
   if (loading) {
     return (
-      <div className="container mx-auto p-4">
+      <div className="flex flex-col w-full max-w-7xl mx-auto p-4">
         <Skeleton className="h-12 w-3/4 mb-6" />
         <div className="space-y-4">
           {/* Skeleton para o ProfileCard */}
@@ -90,7 +90,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
   if (error) return <div>Erro: {error}</div>;
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="flex flex-col w-full max-w-7xl mx-auto p-4 xl:p-0">
       <h1 className="text-3xl font-bold mb-6">Perfil de {params.username}</h1>
       {userProfile && <ProfileCard userProfile={userProfile} />}
       {repos.length > 0 && <RepositoryList repos={repos} username={params.username} />}
