@@ -3,11 +3,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Examples from '@/components/Examples'
 
 export default function Home() {
   const [username, setUsername] = useState('')
   const router = useRouter()
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (username.trim()) {
@@ -33,6 +34,7 @@ export default function Home() {
           </Button>
         </div>
       </form>
+      <Examples />
     </div>
   )
 }
