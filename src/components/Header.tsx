@@ -12,8 +12,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
  
   return (
-    <div className="w-full justify-center py-8 place-items-baseline">
-      <div className="flex w-full max-w-7xl mx-auto justify-between">
+    <div className="w-full justify-center py-8">
+      <div className="flex w-full max-w-7xl px-4 mx-auto justify-between">
         <h1 className="text-2xl font-bold"><Link href={"/"}>GitHub Explorer</Link></h1>
         <Button
           variant="default"
