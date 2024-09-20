@@ -27,12 +27,12 @@ export default function RepositoryList({ repos }: RepositoryListProps) {
     <>
       <div className="flex justify-between items-center mb-4">
         <div className='flex flex-col'>
-        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-200">Repositórios</h2>
+        <h2 className="text-2xl font-bold text-zinc-200 dark:text-zinc-900">Repositórios</h2>
           <span className='text-zinc-400 text-xs dark:text-zinc-600'>*Limite máximo de 100 repositórios</span>
         </div>
-        <div className='text-zinc-900 dark:text-zinc-400'>
+        <div className='text-zinc-200 dark:text-zinc-900'>
           <Select value={viewMode} onValueChange={setViewMode}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-36">
               <SelectValue placeholder="Selecione a visualização" />
             </SelectTrigger>
             <SelectContent>
@@ -62,8 +62,8 @@ export default function RepositoryList({ repos }: RepositoryListProps) {
       {viewMode === 'grid' && (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {repos.map((repo) => (
-            <Card key={repo.id} className="overflow-hidden shadow-lg dark:shadow-zinc-900">
-              <CardHeader className="bg-primary text-primary-foreground">
+            <Card key={repo.id} className="overflow-hidden shadow-xl shadow-zinc-900 dark:shadow-zinc-200">
+              <CardHeader className="bg-primary text-zinc-200 dark:text-zinc-900">
                 <CardTitle className="flex items-center justify-between">
                     <span className="truncate font-medium">{repo.name}</span>
                     <GitHubLogoIcon className="h-5 w-5" aria-label="Repositório Público" />

@@ -1,38 +1,38 @@
 "use client"
-
-import { useState } from 'react'
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Moon, Sun } from 'lucide-react'
+import { Separator } from "./ui/separator";
+import { useEffect } from 'react';
+import Link from "next/link";
 
-export default function Header({ onThemeChange }: { onThemeChange: () => void }) {
-  const [username, setUsername] = useState('')
+interface HeaderProps {
+  theme: 'light' | 'dark';
+  setTheme: React.Dispatch<React.SetStateAction<'light' | 'dark'>>;
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (username.trim()) {
-      // Redirecionar para a página do usuário
-      window.location.href = `/${username.trim()}?from=home`
-    }
-  }
+const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
+  // Use useEffect para aplicar o tema ao body
+  useEffect(() => {
+    document.body.className = theme; // Aplica a classe do tema ao body
+  }, [theme]);
 
   return (
-    <header className="container mx-auto p-4 flex justify-between items-center">
-      <h1 className="text-3xl font-bold">Analisador de Perfil GitHub</h1>
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <Input
-          type="text"
-          placeholder="Nome de usuário do GitHub"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          className="flex-grow"
-          aria-label="Nome de usuário do GitHub"
-        />
-        <Button type="submit">Analisar Perfil</Button>
-      </form>
-      <div>
-        <Button onClick={onThemeChange}>Trocar Tema</Button>
+    <div className="w-full items-center justify-center">
+      <div className="flex mb-6 justify-between w-full mx-auto pt-8 px-4 sm:px-16">
+        <h1 className="text-3xl font-bold text-zinc-200 dark:text-zinc-900"><Link href={"/"}>GitHub Analytics</Link></h1>
+
+        <Button
+          variant="default"
+          size="icon"
+          onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          aria-label={`Alternar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}
+        >
+          {theme === 'light' ? <Moon /> : <Sun />}
+        </Button>
       </div>
-    </header>
+      <Separator className="my-4" />
+    </div>
   )
 }
+
+export default Header

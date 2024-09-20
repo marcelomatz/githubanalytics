@@ -1,6 +1,6 @@
 "use client"
-
-import { useState } from 'react'
+import Header from "@/components/Header"
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -8,6 +8,11 @@ import { Input } from "@/components/ui/input"
 export default function Home() {
   const [username, setUsername] = useState('')
   const router = useRouter()
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -18,7 +23,6 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Analisador de Perfil GitHub</h1>
       <form onSubmit={handleSubmit} className="mb-8">
         <div className="flex gap-2">
           <Input

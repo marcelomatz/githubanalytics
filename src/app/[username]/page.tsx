@@ -30,11 +30,6 @@ export default function UserPage({ params }: { params: { username: string } }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (isFromHome) {
-        // Simula um pequeno atraso para mostrar o skeleton
-        await new Promise(resolve => setTimeout(resolve, 1000))
-      }
-
       setLoading(true)
       setError(null)
       try {
