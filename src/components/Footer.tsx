@@ -9,8 +9,7 @@ export default function Footer() {
           <p className="text-center text-sm leading-loose md:text-left">
             Desenvolvido por{" "}
             <Link
-              href="https://github.com/marcelomatz"
-              target="_blank"
+              href="/marcelomatz"
               rel="noreferrer"
               className="font-medium underline underline-offset-4"
             >
