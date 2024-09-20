@@ -8,11 +8,6 @@ import Examples from '@/components/Examples'
 export default function Home() {
   const [username, setUsername] = useState('')
   const router = useRouter()
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-  }, [theme]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -34,7 +29,7 @@ export default function Home() {
             className="flex-grow"
             aria-label="Nome de usuário do GitHub"
           />
-          <Button type="submit" className="bg-slate-100/90 text-slate-900 dark:bg-slate-900/90 dark:text-slate-200 hover:bg-slate-100/70">
+          <Button type="submit" className="bg-zinc-900 text-zinc-200 hover:bg-zinc-700 dark:bg-zinc-800">
             Analisar Perfil
           </Button>
         </div>

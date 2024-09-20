@@ -19,7 +19,7 @@ const devCompanies = [
 function CompanyGrid({ companies }: { companies: any[] }) {
   return (
     <div className="mb-4">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {companies.map((company) => (
           <Link href={`/${company.name}`}>
             <Card key={company.name} className="bg-zinc-800 text-white border-0 dark:bg-zinc-200 dark:text-zinc-900 hover:shadow-xl transition-shadow duration-300">
