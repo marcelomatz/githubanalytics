@@ -7,11 +7,14 @@
     --background: #030303;
     --foreground: #e6e6e6;
   }
+  
 }
+
 
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: 'Geist Sans', sans-serif;
 }
 
 @layer utilities {
@@ -84,3 +87,4 @@ body {
     @apply border-border;
   }
 }
+

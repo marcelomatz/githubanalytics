@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Examples from "@/components/Examples";
+import Hero from "@/components/Hero";
 
 export default function Home() {
   const [username, setUsername] = useState("");
@@ -17,24 +18,29 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col max-w-7xl mx-auto px-4 xl:px-0">
-      <form onSubmit={handleSubmit} className="">
-        <div className="flex gap-4">
-          <Input
-            type="text"
-            placeholder="Nome de usuário do GitHub"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            className="flex-grow"
-            aria-label="Nome de usuário do GitHub"
-          />
-          <Button type="submit" variant="secondary">
-            Analisar Perfil
-          </Button>
+    <>
+      <div className="flex flex-col bg-zinc-900 max-w-7xl mx-auto px-4 xl:px-0">
+        <div className="sticky top-0 bg-zinc-900 z-20 w-full py-10">
+          <form onSubmit={handleSubmit} className="">
+            <div className="flex gap-4">
+              <Input
+                type="text"
+                placeholder="Nome de usuário do GitHub"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="flex-grow"
+                aria-label="Nome de usuário do GitHub"
+              />
+              <Button type="submit" variant="secondary">
+                Explorar Perfil
+              </Button>
+            </div>
+          </form>
         </div>
-      </form>
       <Examples />
-    </div>
+      <Hero />
+      </div>
+    </>
   );
 }
