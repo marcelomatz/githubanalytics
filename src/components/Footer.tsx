@@ -13,7 +13,7 @@ export default function Footer() {
             {new Date().getFullYear()}.
           </p>
           <p className="text-xs">GitHub Explorer. Todos os direitos
-          reservados | Desenvolvido por: <Link href={`/marcelomatz`}>Marcelo Matz</Link></p>
+          reservados | Desenvolvido por: <Link href={`/marcelomatzx`}>Marcelo Matz</Link></p>
         </div>
       </div>
     </footer>
