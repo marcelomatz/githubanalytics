@@ -8,11 +8,11 @@ export default function Footer() {
       <div className="flex flex-col px-4 pb-2 pt-2 w-full justify-center mx-auto">
         <div className="flex flex-col gap-2 items-center">
           <h2 className="text-md font-bold">GitHub Explorer</h2>
-          <p className="text-xs">
+          <p className="text-xs text-center">
             Explore repositórios do GitHub com facilidade e estilo. &copy;{" "}
             {new Date().getFullYear()}.
           </p>
-          <p className="text-xs">GitHub Explorer. Todos os direitos
+          <p className="text-xs text-center">GitHub Explorer. Todos os direitos
           reservados | Desenvolvido por: <Link href={`/marcelomatzx`}>Marcelo Matz</Link></p>
         </div>
       </div>
