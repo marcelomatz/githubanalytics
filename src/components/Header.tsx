@@ -14,9 +14,9 @@ const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
   return (
     <div className="w-full justify-center py-8 place-items-baseline">
       <div className="flex w-full max-w-7xl mx-auto justify-between">
-        <h1 className="text-2xl font-bold"><Link href={"/"}>GitHub Analytics</Link></h1>
+        <h1 className="text-2xl font-bold"><Link href={"/"}>GitHub Explorer</Link></h1>
         <Button
-          variant="primary"
+          variant="default"
           size="icon"
           onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
           aria-label={`Alternar para tema ${theme === 'light' ? 'escuro' : 'claro'}`}

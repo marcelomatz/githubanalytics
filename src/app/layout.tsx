@@ -31,7 +31,6 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen items-center justify-center`}
       >
         <ThemeManager>
-          
           {children}
           <Footer />
         </ThemeManager>

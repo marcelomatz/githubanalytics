@@ -1,20 +1,20 @@
-"use client"
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import Examples from '@/components/Examples'
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Examples from "@/components/Examples";
 
 export default function Home() {
-  const [username, setUsername] = useState('')
-  const router = useRouter()
+  const [username, setUsername] = useState("");
+  const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (username.trim()) {
-      router.push(`/${username.trim()}`)
+      router.push(`/${username.trim()}`);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col max-w-7xl mx-auto px-4 xl:px-0">
@@ -29,12 +29,12 @@ export default function Home() {
             className="flex-grow"
             aria-label="Nome de usuário do GitHub"
           />
-          <Button type="submit" className="bg-primary text-primary-foreground">
+          <Button type="submit" variant="secondary">
             Analisar Perfil
           </Button>
         </div>
       </form>
       <Examples />
     </div>
-  )
+  );
 }
