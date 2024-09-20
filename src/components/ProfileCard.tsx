@@ -17,7 +17,7 @@ export default function ProfileCard({ userProfile }: ProfileCardProps) {
   }
 
   return (
-    <Card className="mb-8">
+    <Card className="mb-8 bg-zinc-200 dark:bg-zinc-900">
       <CardHeader>
         <CardTitle className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
