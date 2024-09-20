@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div className="flex flex-col max-w-7xl mx-auto px-4 xl:px-0">
       <form onSubmit={handleSubmit} className="">
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <Input
             type="text"
             placeholder="Nome de usuário do GitHub"

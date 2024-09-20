@@ -55,7 +55,8 @@ function CompanyGrid({ companies }: { companies: any[] }) {
 
 export default function Examples() {
   return (
-    <div className="flex flex-col w-full max-w-7xl mx-auto py-10">
+    <div className="flex flex-col w-full max-w-7xl mx-auto pt-10 space-y-4">
+      <h2 className="text-background">Ou escolha uma das opções abaixo:</h2>
       <CompanyGrid companies={techCompanies} />
     </div>
   );
