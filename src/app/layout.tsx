@@ -18,8 +18,12 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "GitHub Explorer",
-  description: "Explore repositórios do GitHub com facilidade e estilo",
+  title: "The Profile | Dev",
+  description: "Crie o seu perfil público, compartilhe os seus projetos e encontre um novo emprego na área de tecnologia.",
+  openGraph: {
+    title: 'The Profile | Dev',
+    description: 'Somos uma comunidade Open-Source focada em conectar pessoas à oportunidades no mercado de desenvolvimento.',
+  },
 };
 
 export default function RootLayout({

@@ -9,7 +9,7 @@ export default function Hero() {
           className="text-center mb-16 "
         >
           <h1 className="text-4xl md:text-6xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-            Descubra o GitHub Explorer
+            The Profile | Dev
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-300">
             Crie o seu perfil público, compartilhe os seus projetos e encontre um novo emprego na área de tecnologia.
