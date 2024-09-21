@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import Link from "next/link";
+import Image from 'next/image';
 
 const techCompanies = [
   { name: "Google", logo: "https://github.com/google.png" },
@@ -35,12 +36,15 @@ function CompanyGrid({ companies }: { companies: any[] }) {
             >
               <CardContent className="flex flex-col items-center justify-center p-6">
                 <Avatar className="w-11 h-auto mb-2 items-center justify-center">
-                  <AvatarImage
+                  <Image
                     src={company.logo}
                     alt={`${company.name} logo`}
-                    className="items-center justify-center"
+                    width={40}
+                    height={40}
+                    quality={100}
+                    className="rounded-full"
+                    loading="lazy"
                   />
-                  <AvatarFallback>{company.name[0]}</AvatarFallback>
                 </Avatar>
                 <h3 className="font-semibold text-lg text-center">
                   {company.name}
