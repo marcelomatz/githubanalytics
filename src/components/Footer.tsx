@@ -40,7 +40,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 pt-8 border-t border-primary-foreground/10 text-center">
           <p className="text-sm">
-            &copy; {new Date().getFullYear()} GitHub Explorer. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} The Profile | Dev. Todos os direitos reservados.
           </p>
           <p className="text-sm mt-2">
             Desenvolvido por: <Link href="/marcelomatzx" className="hover:underline">Marcelo Matz</Link>
