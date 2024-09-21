@@ -64,7 +64,7 @@ export default function Features() {
               <div className="w-12 h-12 text-purple-400 mb-4">
               {feature.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <h3 className="text-xl font-semibold mb-2 text-background">{feature.title}</h3>
               <p className="text-gray-400">{feature.description}</p>
             </div>
           ))}
