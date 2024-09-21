@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProfileCard from "@/components/ProfileCard";
 import RepositoryList from "@/components/RepositoryList";
 import { UserProfile, Repository } from "@/types";
 import { fetchUserData } from "@/components/UserDataFetcher";
-import ClipLoader from "react-spinners/ClipLoader";
 
 export default function UserPage({ params }: { params: { username: string } }) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -14,21 +13,14 @@ export default function UserPage({ params }: { params: { username: string } }) {
   const [filteredRepos, setFilteredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  let [color, setColor] = useState("#ffffff");
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const isFromHome = searchParams.get("from") === "home";
-  const override = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "purple",
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setColor("#c084fc");
       setError(null);
       try {
         const response = await fetchUserData(params.username);
@@ -60,14 +52,11 @@ export default function UserPage({ params }: { params: { username: string } }) {
   if (loading) {
     return (
       <div className="sweet-loading">
-        <ClipLoader
-          color={color}
-          loading={loading}
-          cssOverride={override}
-          size={150}
-          aria-label="Loading Spinner"
-          data-testid="loader"
-        />
+        <Suspense fallback={<div>Carregando...</div>}>
+          {userProfile && ( // Verifica se userProfile não é nulo
+            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
+          )}
+        </Suspense>
       </div>
     );
   }
@@ -75,14 +64,14 @@ export default function UserPage({ params }: { params: { username: string } }) {
   if (error) return <div>Erro: {error}</div>;
 
   return (
-    <div className="flex flex-col w-full max-w-7xl mx-auto mb-10 p-4 xl:p-0">
-      <h1 className="text-3xl font-bold mb-6">Perfil de {params.username}</h1>
+    <div className="flex flex-col w-full max-w-7xl mx-auto mb-10 mt-10 p-4 xl:p-0">
+      <h1 className="text-3xl font-bold mb-6 text-background">Perfil de {params.username}</h1>
       {userProfile && (
         <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
       )}
       <div className="w-full mt-4 mb-4 flex justify-between">
         <div>
-          <h3 className="text-lg font-semibold mb-2">
+          <h3 className="text-lg font-semibold mb-2 text-background">
             Linguagens de programação mais usadas por {params.username}:
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -118,7 +107,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
           Limpar Filtros
         </a>
       )}
-      <p className="pb-4 text-sm font-normal">
+      <p className="pb-4 text-sm font-normal text-background">
         Total de repositórios: {filteredRepos.length}{" "}
         {selectedLanguage ? `filtrados por ${selectedLanguage}` : ""}
       </p>

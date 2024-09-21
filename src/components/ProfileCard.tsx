@@ -18,38 +18,38 @@ export default function ProfileCard({ userProfile, repositories }: ProfileCardPr
   }
 
   return (
-    <Card className="mb-8 bg-zinc-100 dark:bg-zinc-900">
+    <Card className="mb-8 bg-gradient-to-t from-zinc-700 to-zinc-900">
       <CardHeader>
-        <CardTitle className="flex items-center gap-4">
-          <Avatar className="h-16 w-16 bg-background dark:bg-foreground">
+        <CardTitle className="flex items-center gap-4 text-zinc-100">
+          <Avatar className="h-16 w-16 bg-background">
             <AvatarImage src={userProfile.avatar_url} alt={userProfile.name || userProfile.login} />
             <AvatarFallback>{userProfile.login.slice(0, 2).toUpperCase()}</AvatarFallback>
           </Avatar>
           <div>
-            <h2 className="text-2xl font-bold">{userProfile.name || userProfile.login}</h2>
-            <p className="text-muted-foreground">@{userProfile.login}</p>
+            <h2 className="text-2xl font-bold text-background">{userProfile.name || userProfile.login}</h2>
+            <p className="text-background/50 font-light">@{userProfile.login}</p>
           </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 md:grid-cols-2">
-          <div>
+          <div className="text-zinc-100">
             {userProfile.bio && <p className="mb-2">{userProfile.bio}</p>}
             {userProfile.company && (
               <p className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-blue-500" />
+                <Users />
                 {userProfile.company}
               </p>
             )}
             {userProfile.location && (
-              <p className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-blue-500" />
+              <p className="flex items-center gap-2 text-zinc-100">
+                <MapPin className="h-4 w-4" />
                 {userProfile.location}
               </p>
             )}
             {userProfile.blog && (
-              <p className="flex items-center gap-2">
-                <LinkIcon className="h-4 w-4 text-blue-500" />
+              <p className="flex items-center gap-2 text-zinc-100">
+                <LinkIcon className="h-4 w-4 " />
                 <a href={userProfile.blog} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                   {userProfile.blog}
                 </a>
@@ -57,16 +57,16 @@ export default function ProfileCard({ userProfile, repositories }: ProfileCardPr
             )}
           </div>
           <div>
-            <p className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-blue-500" />
+            <p className="flex items-center gap-2 text-zinc-100">
+              <Users className="h-4 w-4" />
               {userProfile.followers} seguidores · {userProfile.following} seguindo
             </p>
-            <p className="flex items-center gap-2">
-              <GitFork className="h-4 w-4 text-blue-500" />
+            <p className="flex items-center gap-2 text-zinc-100">
+              <GitFork className="h-4 w-4" />
               {userProfile.public_repos} repositórios públicos
             </p>
-            <p className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-blue-500" />
+            <p className="flex items-center gap-2 text-zinc-100">
+              <Calendar className="h-4 w-4" />
               Membro desde {formatDate(userProfile.created_at)}
             </p>
           </div>

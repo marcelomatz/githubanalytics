@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card } from "./ui/card";
 import Link from "next/link";
 import { StarIcon, GitBranch, BadgeAlert, Code } from "lucide-react";
+import { Button } from "./ui/button";
 
 export default function RepositoryList({
   repositories,
@@ -30,47 +31,48 @@ export default function RepositoryList({
   return (
     <>
       {viewMode === "grid" && (
-        <div className="grid gap-6 w-full justify-between md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 w-full justify-center md:grid-cols-2 lg:grid-cols-3">
           {currentRepos.length > 0 ? (
             currentRepos.map((repo) => (
-              <Card
-                key={repo.id}
-                className="overflow-hidden shadow-lg rounded-lg bg-zinc-100 w-full max-w-full p-4 flex flex-col"
-              >
-                <div className="flex items-center space-x-4">
-                  <img
-                    src={repo.owner.avatar_url}
-                    alt="Avatar do proprietário"
-                    className="w-14 h-14 rounded-full"
-                  />
-                  <div className="flex items-center gap-4">
-                    <Link
-                      href={`/${username}/${repo.name}`}
-                      className="text-lg font-semibold hover:text-blue-500"
-                    >
+              <Card key={repo.id} className="p-4 flex flex-col hover:bg-gradient-to-r hover:from-purple-400 hover:to-pink-600 transition-colors duration-500 ease-in-out">
+                <Link
+                  href={`/${username}/${repo.name}`}
+                  className="text-lg font-semibold hover:text-zinc-900"
+                >
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={repo.owner.avatar_url}
+                      alt="Avatar do proprietário"
+                      className="w-14 h-14 rounded-full"
+                    />
+                    <div className="flex items-center gap-4">
                       {repo.name.length > 20
                         ? `${repo.name.substring(0, 20)}...`
                         : repo.name}
-                    </Link>
+                    </div>
                   </div>
-                </div>
-                <span className="text-xl text-zinc-900 font-bold pl-1 pt-4">{repo.language}</span>
+                <span className="text-xl text-zinc-900 font-bold pl-1 pt-4">
+                  {repo.language}
+                </span>
                 <div className="mt-2 flex flex-col">
-                  <p className="text-sm text-gray-600 pb-6 pl-1">
-                    {repo.description ? `${repo.description.substring(0, 50)}...` : "Sem descrição."}
+                  <p className="text-sm text-foreground font-normal pb-6 pl-1">
+                    {repo.description
+                      ? `${repo.description}`
+                      : "Sem descrição."}
                   </p>
                   <div className="grid grid-cols-3 gap-2 items-center text-center">
-                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-foreground text-background">
                       <StarIcon className="w-4" /> {repo.stargazers_count}
                     </span>
-                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-foreground text-background">
                       <GitBranch className="w-4" /> {repo.forks_count}
                     </span>
-                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-foreground text-background">
                       <BadgeAlert className="w-4" /> {repo.open_issues_count}
                     </span>
                   </div>
                 </div>
+                      </Link>
                 <div className="flex justify-between mt-6 items-center">
                   <a
                     href={repo.html_url}
@@ -80,8 +82,8 @@ export default function RepositoryList({
                   >
                     Ver no GitHub
                   </a>
-                  <span className="text-xs text-gray-500">
-                    Tamanho: {(repo.size / 1024).toFixed(2)} MB
+                  <span className="text-xs text-foreground font-semibold">
+                    {(repo.size / 1024).toFixed(2)} MB
                   </span>
                 </div>
               </Card>
@@ -94,26 +96,25 @@ export default function RepositoryList({
 
       {/* Controles de Paginação */}
       <div className="flex justify-between mt-4 items-center">
-        <button
+        <Button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className="px-4 py-2 bg-transparent/90 text-white rounded-xl"
+          variant={"secondary"}
         >
           Anterior
-        </button>
-        <span className="text-xs sm:text-lg items-center">
-          Mostrando de {indexOfFirstRepo + 1} até {indexOfLastRepo} de um total
-          de {filteredRepos.length}
+        </Button>
+        <span className="text-xs text-background items-center">
+          Mostrando repositórios de {indexOfFirstRepo + 1} até {indexOfLastRepo}
         </span>
-        <button
+        <Button
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
           disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-transparent/90 text-white rounded-xl"
+          variant={"secondary"}
         >
           Próxima
-        </button>
+        </Button>
       </div>
     </>
   );
