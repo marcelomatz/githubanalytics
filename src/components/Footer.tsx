@@ -3,7 +3,7 @@ import { Github, Linkedin, Twitter } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-background/95 dark:bg-foreground/95 text-primary-foreground mt-40 border-t border-y-0 border-purple-500/40">
+    <footer className="bg-background/95 text-foreground mt-40 border-t border-y-0 border-purple-500/40">
       <div className="flex flex-col max-w-7xl justify-between mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="flex flex-col items-center md:items-start">
@@ -26,19 +26,19 @@ export default function Footer() {
           </div>
           <div className="flex flex-col items-center md:items-start">
             <h3 className="text-lg font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2">
+            <ul className="space-y-2 text-center sm:text-start">
               <li>
-                <Link href="/" className="text-sm hover:underline">
+                <Link href="/" className="text-sm text-center hover:underline">
                   Início
                 </Link>
               </li>
               <li>
-                <Link href="/" className="text-sm hover:underline">
+                <Link href="/" className="text-sm text-center hover:underline">
                   Sobre
                 </Link>
               </li>
               <li>
-                <Link href="/" className="text-sm hover:underline">
+                <Link href="/" className="text-sm text-center hover:underline">
                   Contato
                 </Link>
               </li>
