@@ -1,362 +1,120 @@
+import { RepositoryListProps } from "@/types";
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Star,
-  GitFork,
-  Code,
-  Calendar,
-  Eye,
-  GitBranch,
-  FileCode,
-  Scale,
-  MessageSquare,
-  Grid,
-  List,
-  BarChart,
-  Link2Icon,
-} from "lucide-react";
-import { Repository } from "@/types";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { Card } from "./ui/card";
 import Link from "next/link";
-
-interface RepositoryListProps {
-  repos: Repository[];
-  username: string;
-}
+import { StarIcon, GitBranch, BadgeAlert, Code } from "lucide-react";
 
 export default function RepositoryList({
-  repos,
+  repositories,
   username,
 }: RepositoryListProps) {
   const [viewMode, setViewMode] = useState("grid");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Estado para a página atual
+  const reposPerPage = 9; // Número de repositórios por página
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("pt-BR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
+  const filteredRepos = repositories.filter((repo) =>
+    repo.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Calcular os repositórios a serem exibidos na página atual
+  const totalPages = Math.ceil(filteredRepos.length / reposPerPage); // Total de páginas
+  const indexOfLastRepo = currentPage * reposPerPage;
+  const indexOfFirstRepo = indexOfLastRepo - reposPerPage;
+  const currentRepos = filteredRepos.slice(indexOfFirstRepo, indexOfLastRepo);
+
+  // Verificação para evitar acesso a índices inválidos
+  if (currentPage < 1) setCurrentPage(1);
+  if (currentPage > totalPages) setCurrentPage(totalPages);
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex flex-col">
-          <h2 className="text-2xl font-bold text-foreground dark:text-background">
-            Repositórios
-          </h2>
-          <span className="text-xs text-primary-foreground">
-            *Limite máximo de 100 repositórios
-          </span>
-        </div>
-        <div className="text-primary-foreground">
-          <Select value={viewMode} onValueChange={setViewMode}>
-            <SelectTrigger className="w-36">
-              <SelectValue placeholder="Selecione a visualização" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="grid">
-                <div className="flex items-center">
-                  <Grid className="mr-2 h-4 w-4" />
-                  <span>Grid</span>
-                </div>
-              </SelectItem>
-              <SelectItem value="list">
-                <div className="flex items-center">
-                  <List className="mr-2 h-4 w-4" />
-                  <span>Lista</span>
-                </div>
-              </SelectItem>
-
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
       {viewMode === "grid" && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {repos.map((repo) => (
-            <Card
-              key={repo.id}
-              className="overflow-hidden"
-            >
-              <CardHeader className="bg-primary text-primary-foreground">
-                <CardTitle className="flex items-center justify-between">
-                  <span className="truncate font-semibold">
+        <div className="grid gap-6 w-full justify-between md:grid-cols-2 lg:grid-cols-3">
+          {currentRepos.length > 0 ? (
+            currentRepos.map((repo) => (
+              <Card
+                key={repo.id}
+                className="overflow-hidden shadow-lg rounded-lg bg-zinc-100 w-full max-w-full p-4 flex flex-col"
+              >
+                <div className="flex items-center space-x-4">
+                  <img
+                    src={repo.owner.avatar_url}
+                    alt="Avatar do proprietário"
+                    className="w-14 h-14 rounded-full"
+                  />
+                  <div className="flex items-center gap-4">
                     <Link
                       href={`/${username}/${repo.name}`}
-                      className="text-primary-foreground hover:underline flex items-center gap-2"
+                      className="text-lg font-semibold hover:text-blue-500"
                     >
-                      <Link2Icon />
-                      {repo.name}
+                      {repo.name.length > 20
+                        ? `${repo.name.substring(0, 20)}...`
+                        : repo.name}
                     </Link>
-                  </span>
-                  <GitHubLogoIcon
-                    className="h-5 w-5"
-                    aria-label="Repositório Público"
-                  />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="p-4">
-                <div className="flex flex-col text-sm font-medium p-4">
-                  {repo.description || "Sem descrição"}
+                  </div>
                 </div>
-                <Tabs defaultValue="details">
-                  <TabsList className="grid w-full grid-cols-3 text-foreground">
-                    <TabsTrigger value="details">Detalhes</TabsTrigger>
-                    <TabsTrigger value="stats">Estatísticas</TabsTrigger>
-                    <TabsTrigger value="extra">Extra</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="details" className="p-2 text-sm">
-                    <ul className="space-y-2">
-                      <li className="flex items-center">
-                        <Code className="mr-2 h-4 w-4" />
-                        <span>Linguagem: {repo.language || "N/A"}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>Criado em: {formatDate(repo.created_at)}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>Último push: {formatDate(repo.pushed_at)}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <GitBranch className="mr-2 h-4 w-4" />
-                        <span>Branch padrão: {repo.default_branch}</span>
-                      </li>
-                    </ul>
-                  </TabsContent>
-                  <TabsContent value="stats" className="p-2 text-sm">
-                    <ul className="space-y-2">
-                      <li className="flex items-center">
-                        <Star className="mr-2 h-4 w-4" />
-                        <span>Stars: {repo.stargazers_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <GitFork className="mr-2 h-4 w-4" />
-                        <span>Forks: {repo.forks_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Eye className="mr-2 h-4 w-4" />
-                        <span>Watchers: {repo.watchers_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        <span>Issues abertas: {repo.open_issues_count}</span>
-                      </li>
-                    </ul>
-                  </TabsContent>
-                  <TabsContent value="extra" className="p-2 text-sm">
-                    <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem value="description">
-                        <AccordionTrigger>Descrição</AccordionTrigger>
-                        <AccordionContent>
-                          {repo.description || "Sem descrição"}
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="topics">
-                        <AccordionTrigger>Tópicos</AccordionTrigger>
-                        <AccordionContent>
-                          {repo.topics && repo.topics.length > 0 ? (
-                            <div className="flex flex-wrap gap-2">
-                              {repo.topics.map((topic) => (
-                                <Badge key={topic} variant="secondary">
-                                  {topic}
-                                </Badge>
-                              ))}
-                            </div>
-                          ) : (
-                            "Nenhum tópico definido"
-                          )}
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="license">
-                        <AccordionTrigger>Licença</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="flex items-center">
-                            <Scale className="mr-2 h-4 w-4" />
-                            <span>
-                              {repo.license ? repo.license.name : "Sem licença"}
-                            </span>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </TabsContent>
-                </Tabs>
-                <div className="mt-4 px-1 flex bottom-0 relative justify-between items-center">
-                  <Link
-                    href={`https://github.com/${username}/${repo.name}`}
-                    className="text-blue-500 hover:underline flex items-center text-sm"
+                <span className="text-xl text-zinc-900 font-bold pl-1 pt-4">{repo.language}</span>
+                <div className="mt-2 flex flex-col">
+                  <p className="text-sm text-gray-600 pb-6 pl-1">
+                    {repo.description ? `${repo.description.substring(0, 50)}...` : "Sem descrição."}
+                  </p>
+                  <div className="grid grid-cols-3 gap-2 items-center text-center">
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                      <StarIcon className="w-4" /> {repo.stargazers_count}
+                    </span>
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                      <GitBranch className="w-4" /> {repo.forks_count}
+                    </span>
+                    <span className="flex flex-col py-1 px-4 items-center rounded text-xs font-medium bg-gray-200 text-gray-800">
+                      <BadgeAlert className="w-4" /> {repo.open_issues_count}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex justify-between mt-6 items-center">
+                  <a
+                    href={repo.html_url}
                     target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-zinc-900 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                   >
-                    <FileCode className="mr-2 h-4 w-4" />
                     Ver no GitHub
-                  </Link>
-                  <span className="text-sm text-muted-foreground">
+                  </a>
+                  <span className="text-xs text-gray-500">
                     Tamanho: {(repo.size / 1024).toFixed(2)} MB
                   </span>
                 </div>
-              </CardContent>
-            </Card>
-          ))}
+              </Card>
+            ))
+          ) : (
+            <p>Nenhum repositório encontrado.</p> // Mensagem se não houver repositórios
+          )}
         </div>
       )}
 
-      {viewMode === "list" && (
-        <div className="space-y-4">
-          {repos.map((repo) => (
-            <Card key={repo.id} className="bg-foreground text-primary-foreground dark:bg-foreground">
-              <CardHeader className="">
-                <CardTitle className="flex items-center justify-between">
-                  <span>
-                    <Link
-                      href={`/${username}/${repo.name}`}
-                      className="text-blue-500 hover:underline"
-                    >
-                      {repo.name}
-                    </Link>
-                  </span>
-                  <GitHubLogoIcon
-                    className="h-5 w-5"
-                    aria-label="Repositório Público"
-                  />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="py-4">
-                <p className="mb-2">{repo.description || "Sem descrição"}</p>
-                <div className="flex flex-wrap gap-2 mb-2">
-                  <Badge variant="secondary">
-                    <Code className="mr-1 h-4 w-4" />
-                    {repo.language || "N/A"}
-                  </Badge>
-                  <Badge variant="secondary">
-                    <Star className="mr-1 h-4 w-4" />
-                    {repo.stargazers_count}
-                  </Badge>
-                  <Badge variant="secondary">
-                    <GitFork className="mr-1 h-4 w-4" />
-                    {repo.forks_count}
-                  </Badge>
-                </div>
-                <Tabs defaultValue="details">
-                  <TabsList className="grid w-full grid-cols-3">
-                    <TabsTrigger value="details">Detalhes</TabsTrigger>
-                    <TabsTrigger value="stats">Estatísticas</TabsTrigger>
-                    <TabsTrigger value="extra">Extra</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="details">
-                    <ul className="space-y-2">
-                      <li className="flex items-center">
-                        <Code className="mr-2 h-4 w-4" />
-                        <span>Linguagem: {repo.language || "N/A"}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>Criado em: {formatDate(repo.created_at)}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        <span>Último push: {formatDate(repo.pushed_at)}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <GitBranch className="mr-2 h-4 w-4" />
-                        <span>Branch padrão: {repo.default_branch}</span>
-                      </li>
-                    </ul>
-                  </TabsContent>
-                  <TabsContent value="stats">
-                    <ul className="space-y-2">
-                      <li className="flex items-center">
-                        <Star className="mr-2 h-4 w-4" />
-                        <span>Stars: {repo.stargazers_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <GitFork className="mr-2 h-4 w-4" />
-                        <span>Forks: {repo.forks_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <Eye className="mr-2 h-4 w-4" />
-                        <span>Watchers: {repo.watchers_count}</span>
-                      </li>
-                      <li className="flex items-center">
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        <span>Issues abertas: {repo.open_issues_count}</span>
-                      </li>
-                    </ul>
-                  </TabsContent>
-                  <TabsContent value="extra">
-                    <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem value="description">
-                        <AccordionTrigger>Descrição</AccordionTrigger>
-                        <AccordionContent>
-                          {repo.description || "Sem descrição"}
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="topics">
-                        <AccordionTrigger>Tópicos</AccordionTrigger>
-                        <AccordionContent>
-                          {repo.topics && repo.topics.length > 0 ? (
-                            <div className="flex flex-wrap gap-2">
-                              {repo.topics.map((topic) => (
-                                <Badge key={topic} variant="secondary">
-                                  {topic}
-                                </Badge>
-                              ))}
-                            </div>
-                          ) : (
-                            "Nenhum tópico definido"
-                          )}
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="license">
-                        <AccordionTrigger>Licença</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="flex items-center">
-                            <Scale className="mr-2 h-4 w-4" />
-                            <span>
-                              {repo.license ? repo.license.name : "Sem licença"}
-                            </span>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </TabsContent>
-                </Tabs>
-                <div className="mt-4 flex justify-between items-center">
-                <Link
-                    href={`https://github.com/${username}/${repo.name}`}
-                    className="text-blue-500 hover:underline flex items-center"
-                    target="_blank"
-                  >
-                    <FileCode className="mr-2 h-4 w-4" />
-                    Ver no GitHub
-                  </Link>
-                  <span className="text-sm text-muted-foreground">
-                    Tamanho: {(repo.size / 1024).toFixed(2)} MB
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      )}
+      {/* Controles de Paginação */}
+      <div className="flex justify-between mt-4 items-center">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-4 py-2 bg-transparent/90 text-white rounded-xl"
+        >
+          Anterior
+        </button>
+        <span className="text-xs sm:text-lg items-center">
+          Mostrando de {indexOfFirstRepo + 1} até {indexOfLastRepo} de um total
+          de {filteredRepos.length}
+        </span>
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="px-4 py-2 bg-transparent/90 text-white rounded-xl"
+        >
+          Próxima
+        </button>
+      </div>
     </>
   );
 }

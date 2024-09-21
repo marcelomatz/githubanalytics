@@ -11,9 +11,11 @@ import ClipLoader from "react-spinners/ClipLoader";
 export default function UserPage({ params }: { params: { username: string } }) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [repos, setRepos] = useState<Repository[]>([]);
+  const [filteredRepos, setFilteredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   let [color, setColor] = useState("#ffffff");
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const isFromHome = searchParams.get("from") === "home";
@@ -26,12 +28,25 @@ export default function UserPage({ params }: { params: { username: string } }) {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      setColor("#c084fc")
+      setColor("#c084fc");
       setError(null);
       try {
-        const { profile, repositories } = await fetchUserData(params.username);
+        const response = await fetchUserData(params.username);
+        if (!response || !response.profile || !response.repositories) {
+          throw new Error("Dados inválidos recebidos da API.");
+        }
+        const { profile, repositories } = response;
         setUserProfile(profile);
         setRepos(repositories);
+        // Filtrar repositórios com base na linguagem selecionada
+        if (selectedLanguage) {
+          const filtered = repositories.filter(
+            (repo) => repo.language === selectedLanguage
+          );
+          setFilteredRepos(filtered);
+        } else {
+          setFilteredRepos(repositories);
+        }
       } catch (err) {
         setError((err as Error).message);
       } finally {
@@ -40,21 +55,20 @@ export default function UserPage({ params }: { params: { username: string } }) {
     };
 
     fetchData();
-  }, [params.username, isFromHome]);
+  }, [params.username, isFromHome, selectedLanguage]);
 
   if (loading) {
     return (
       <div className="sweet-loading">
-
-      <ClipLoader
-        color={color}
-        loading={loading}
-        cssOverride={override}
-        size={150}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
-    </div>
+        <ClipLoader
+          color={color}
+          loading={loading}
+          cssOverride={override}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
     );
   }
 
@@ -63,10 +77,52 @@ export default function UserPage({ params }: { params: { username: string } }) {
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto mb-10 p-4 xl:p-0">
       <h1 className="text-3xl font-bold mb-6">Perfil de {params.username}</h1>
-      {userProfile && <ProfileCard userProfile={userProfile} />}
-      {repos.length > 0 && (
-        <RepositoryList repos={repos} username={params.username} />
+      {userProfile && (
+        <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
       )}
+      <div className="w-full mt-4 mb-4 flex justify-between">
+        <div>
+          <h3 className="text-lg font-semibold mb-2">
+            Linguagens de programação mais usadas por {params.username}:
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {Array.from(new Set(repos.map((repo) => repo.language))).map(
+              (language) => {
+                const languageCount = repos.filter(
+                  (repo) => repo.language === language
+                ).length;
+                const languageColor = `hsl(${Math.floor(
+                  Math.random() * 360
+                )}, 90%, 70%)`;
+                return (
+                  <span
+                    key={language}
+                    className="bg-gray-200 text-gray-900/90 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded cursor-pointer"
+                    style={{ backgroundColor: languageColor }}
+                    onClick={() => setSelectedLanguage(language || null)}
+                  >
+                    {language} ({languageCount})
+                  </span>
+                );
+              }
+            )}
+          </div>
+        </div>
+      </div>
+      {selectedLanguage && (
+        <a
+          href="#"
+          className="px-4 py-2 bg-zinc-800 text-white rounded w-40 text-center mb-4"
+          onClick={() => setSelectedLanguage(null)}
+        >
+          Limpar Filtros
+        </a>
+      )}
+      <p className="pb-4 text-sm font-normal">
+        Total de repositórios: {filteredRepos.length}{" "}
+        {selectedLanguage ? `filtrados por ${selectedLanguage}` : ""}
+      </p>
+      <RepositoryList repositories={filteredRepos} username={params.username} />{" "}
     </div>
   );
 }
