@@ -30,7 +30,7 @@ export default function Home() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
-                className="flex-grow"
+                className="flex-grow text-white"
                 aria-label="Nome de usuário do GitHub"
               />
               <Button type="submit" variant="secondary">
