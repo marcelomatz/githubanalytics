@@ -57,6 +57,16 @@ export default function UserPage({ params }: { params: { username: string } }) {
             <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
           )}
         </Suspense>
+        <Suspense fallback={<div>Carregando...</div>}>
+          {userProfile && ( // Verifica se userProfile não é nulo
+            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
+          )}
+        </Suspense>
+        <Suspense fallback={<div>Carregando...</div>}>
+          {userProfile && ( // Verifica se userProfile não é nulo
+            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
+          )}
+        </Suspense>
       </div>
     );
   }
