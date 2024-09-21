@@ -11,7 +11,6 @@ const Header = () => {
           </Link>
         </h1>
       </div>
-      <Separator className="my-4 dark:bg-foreground" />
     </div>
   );
 };
