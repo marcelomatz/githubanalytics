@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Template from "./Template";
+import Template from "../components/templateComponents/Template";
 
 const UserSearchForm = () => {
   const [username, setUsername] = useState("");
@@ -28,6 +28,7 @@ const UserSearchForm = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
+
               aria-label="Nome de usuário do GitHub"
             />
             <Button type="submit" variant="secondary">

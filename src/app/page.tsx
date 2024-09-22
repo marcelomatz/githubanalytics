@@ -1,8 +1,7 @@
-import Examples from "@/components/Examples";
-import Hero from "@/components/Hero";
-import Features from "@/components/Features";
+import Examples from "../components/templateComponents/Examples";
+import Hero from "../components/templateComponents/Hero";
+import Features from "../components/templateComponents//Features";
 import UserSearchForm from "@/components/UserSearchForm";
-import Template from "@/components/Template";
 
 export default function Home() {
   return (
