@@ -18,7 +18,7 @@ const UserSearchForm = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col text-white">
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2">
           <Input
