@@ -25,5 +25,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-
-// hostname: ['github.com', 'githubusercontent.com', 'avatars.githubusercontent.com'],

@@ -18,7 +18,7 @@ export interface Repository {
   description?: string;
   html_url: string;
   language?: string;
-  owner: { // Adicionando a propriedade owner
+  owner: {
     avatar_url: string;
     login: string;
   };
@@ -41,13 +41,8 @@ export interface CommitData {
   value: number
 }
 
-export interface Repository {
-  id: number; // ID do repositório
-  name: string; // Nome do repositório
-  // Adicione outros campos relevantes do repositório conforme necessário
-}
 
 export interface RepositoryListProps {
-  repositories: Repository[]; // Array de repositórios
-  username: string; // Nome de usuário do GitHub
+  repositories: Repository[];
+  username: string;
 }

@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
+import Template from "./Template";
 
 const techCompanies = [
   { name: "Google", logo: "https://github.com/google.png" },
@@ -26,43 +27,44 @@ const techCompanies = [
 
 function CompanyGrid({ companies }: { companies: any[] }) {
   return (
-    <div className="mb-4">
-      <div className="grid grid-cols-3 lg:grid-cols-6 xl:grid-cols-9 gap-4">
-        {companies.map((company) => (
-          <Link href={`/${company.name}`}>
-            <Card
-              key={company.name}
-              className="bg-primary text-primary-foreground border-0"
-            >
-              <CardContent className="flex flex-col items-center justify-center p-6">
-                <Avatar className="w-11 h-auto mb-2 items-center justify-center">
-                  <Image
-                    src={company.logo}
-                    alt={`${company.name} logo`}
-                    width={40}
-                    height={40}
-                    quality={100}
-                    className="rounded-full"
-                    loading="lazy"
-                  />
-                </Avatar>
-                <h3 className="font-semibold text-lg text-center">
-                  {company.name}
-                </h3>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
-      </div>
+    <div className="grid grid-cols-3 lg:grid-cols-6 xl:grid-cols-9">
+      {companies.map((company) => (
+        <Link href={`/${company.name}`} key={company.name}>
+          <Card className="bg-primary text-primary-foreground border-0">
+            <CardContent className="flex flex-col items-center justify-center">
+              <Avatar className="w-11 h-auto mb-2 items-center justify-center">
+                <Image
+                  src={company.logo}
+                  alt={`${company.name} logo`}
+                  width={40}
+                  height={40}
+                  quality={100}
+                  className="rounded-full"
+                  loading="lazy"
+                />
+              </Avatar>
+              <h3 className="text-center">
+                {company.name}
+              </h3>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
     </div>
   );
 }
 
 export default function Examples() {
   return (
-    <div className="flex flex-col w-full max-w-7xl mx-auto pt-4">
-      <h2 className="text-background text-sm sm:text-lg text-center pb-8">A tecnologia que move as maiores empresas do mundo</h2>
-      <CompanyGrid companies={techCompanies} />
-    </div>
+    <Template>
+      <div className="mt-8">
+        <h2 className="text-background text-sm sm:text-xl text-center">
+          Conheça a tecnologia e os projetos que movem as maiores empresas do mundo
+        </h2>
+        <div className="mt-16">
+          <CompanyGrid companies={techCompanies} />
+        </div>
+      </div>
+    </Template>
   );
 }

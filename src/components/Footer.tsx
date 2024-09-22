@@ -1,72 +1,28 @@
 import Link from "next/link";
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Github } from "lucide-react";
+import Template from "./Template";
 
 export default function Footer() {
   return (
-    <footer className="bg-background/95 text-foreground mt-40 border-t border-y-0 border-purple-500/40">
-      <div className="flex flex-col max-w-7xl justify-between mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="flex flex-col items-center md:items-start">
-            <h2 className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-              <Link href={"/"}>
-                The Profile | <span className="font-bold">Dev</span>
-              </Link>
-            </h2>
-            <p className="text-sm text-center md:text-left">Open-Source</p>
-            <p className="text-sm mt-6">
-              &copy; {new Date().getFullYear()} The Profile | Dev. Todos os
-              direitos reservados.
-            </p>
-            <p className="text-sm mt-2">
-              Desenvolvido por:{" "}
-              <Link href="/marcelomatzx" className="hover:underline">
-                Marcelo Matz
-              </Link>
-            </p>
-          </div>
-          <div className="flex flex-col items-center md:items-start">
-            <h3 className="text-lg font-semibold mb-4">Links Rápidos</h3>
-            <ul className="space-y-2 text-center sm:text-start">
-              <li>
-                <Link href="/" className="text-sm text-center hover:underline">
-                  Início
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="text-sm text-center hover:underline">
-                  Sobre
-                </Link>
-              </li>
-              <li>
-                <Link href="/" className="text-sm text-center hover:underline">
-                  Contato
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="flex flex-col items-center md:items-start">
-            <h3 className="text-lg font-semibold mb-4">Redes Sociais</h3>
-            <div className="flex space-x-4">
-              <Link
-                href="https://github.com/marcelomatz"
-                className="hover:text-purple-500"
-                target="_blank"
-              >
-                <Github className="h-6 w-6" />
-                <span className="sr-only">GitHub</span>
-              </Link>
-              <Link
-                href="https://www.linkedin.com/in/matzmarcelo/"
-                className="hover:text-purple-500"
-                target="_blank"
-              >
-                <Linkedin className="h-6 w-6" />
-                <span className="sr-only">LinkedIn</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <Template>
+      <footer className="flex flex-col mx-auto w-full justify-between text-center items-center">
+        <h2 className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <Link href={"/"}>
+            The Profile | <span className="font-bold">Dev</span>
+          </Link>
+        </h2>
+        <p className="text-sm">Open-Source</p>
+        <p className="text-sm mt-3">
+          &copy; {new Date().getFullYear()} The Profile | Dev. Todos os direitos
+          reservados.
+        </p>
+        <p className="text-sm mt-2">
+          Desenvolvido por:{" "}
+          <Link href="/marcelomatzx" className="hover:underline">
+            Marcelo Matz
+          </Link>
+        </p>
+      </footer>
+    </Template>
   );
 }

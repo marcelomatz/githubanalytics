@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { Repository } from "@/types";
-import { Skeleton } from "@/components/ui/skeleton";
 import RepositoryCard from "@/components/RepositoryCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -135,33 +134,21 @@ export default function RepoPage({
   params: { username: string; reponame: string };
 }) {
   const [repo, setRepo] = useState<Repository | null>(null);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
       setError(null);
       try {
         const repository = await getRepoData(params.username, params.reponame);
         setRepo(repository);
       } catch (err) {
         setError((err as Error).message);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
   }, [params.username, params.reponame]);
-
-  if (loading) {
-    return (
-      <div className="container mx-auto p-4">
-        <Skeleton className="h-12 w-3/4 mb-6" />
-      </div>
-    );
-  }
 
   if (error) return <div>Erro: {error}</div>;
 
@@ -172,7 +159,7 @@ export default function RepoPage({
         {repo && (
           <>
             <div className="flex space-x-4">
-              <Link href={`/${params.username}`} className="flex items-baseline gap-2">
+              <Link href={`/${params.username}`} className="flex items-baseline gap-2" key={params.username}>
                 <ArrowLeftFromLineIcon />
                 <h1 className="text-3xl font-bold mb-6">
                   Perfil de {params.username}
