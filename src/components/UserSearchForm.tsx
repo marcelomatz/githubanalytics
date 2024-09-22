@@ -28,7 +28,7 @@ const UserSearchForm = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
             aria-label="Nome de usuário do GitHub"
-            className="text-xs"
+            className="text-xs text-white"
           />
           <Button type="submit" variant="secondary">
             Explorar Perfil
