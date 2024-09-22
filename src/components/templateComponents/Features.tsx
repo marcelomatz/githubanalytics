@@ -4,8 +4,8 @@ import { features, featureTitle } from "../../data/HomePage/Features";
 export default function Features() {
   return (
     <Template>
-      <span className="mb-20">
-        <h2 className="text-2xl sm:text-4xl text-center font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+      <span className="mb-16">
+        <h2 className="text-xl sm:text-3xl text-center font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           {featureTitle}
         </h2>
       </span>
