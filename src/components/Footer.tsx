@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Linkedin, Github } from "lucide-react";
 import Template from "./Template";
 
 export default function Footer() {
