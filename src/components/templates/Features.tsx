@@ -1,4 +1,4 @@
-import Template from "../templateComponents/Template";
+import Template from "./Template";
 import { features, featureTitle } from "../../data/HomePage/Features";
 
 export default function Features() {

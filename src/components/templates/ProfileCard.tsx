@@ -8,7 +8,7 @@ interface ProfileCardProps {
   repositories: Repository[]
 }
 
-export default function ProfileCard({ userProfile, repositories }: ProfileCardProps) {
+export default function ProfileCard({ userProfile }: ProfileCardProps) {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
       year: 'numeric',

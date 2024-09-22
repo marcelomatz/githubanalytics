@@ -1,4 +1,4 @@
-import Template from "../templateComponents/Template";
+import Template from "./Template";
 import {ctaPrincipal, ctaSecondary, ctaLinkHref, ctaLinkTitle} from "../../data/HomePage/Hero"
 import Link from "next/link";
 

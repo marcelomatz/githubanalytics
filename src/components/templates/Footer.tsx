@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Template from "../templateComponents/Template";
+import Template from "./Template";
 import { appTitle, appSubTitle } from "../../data/index";
 
 export default function Footer() {

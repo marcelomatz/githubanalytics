@@ -1,6 +1,6 @@
-import Examples from "../components/templateComponents/Examples";
-import Hero from "../components/templateComponents/Hero";
-import Features from "../components/templateComponents//Features";
+import Examples from "../components/templates/Examples";
+import Hero from "../components/templates/Hero";
+import Features from "../components/templates/Features";
 
 export default function Home() {
   return (

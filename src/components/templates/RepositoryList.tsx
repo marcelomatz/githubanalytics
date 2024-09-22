@@ -1,10 +1,10 @@
 import { RepositoryListProps } from "@/types";
 import { useState } from "react";
-import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import Link from "next/link";
 import { StarIcon, GitBranch, BadgeAlert, Code } from "lucide-react";
-import PaginationComponent from "./PaginationComponent"; // Importando o componente de paginação
-import Image from "next/image"; // Importando o componente Image do Next.js
+import PaginationComponent from "../actions/PaginationComponent";
+import Image from "next/image";
 
 export default function RepositoryList({
   repositories,

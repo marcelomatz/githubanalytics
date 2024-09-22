@@ -1,6 +1,6 @@
 import Template from "./Template";
 import HeaderTitle from "./HeaderTitle";
-import UserSearchForm from "../UserSearchForm";
+import UserSearchForm from "../actions/UserSearchForm";
 
 const Header = () => {
   return (
