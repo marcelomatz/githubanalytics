@@ -10,7 +10,7 @@ const Header = () => {
         <HeaderTitle />
         <div className="flex items-center space-x-4 text-white">
           <UserSearchForm />
-          <MenuIcon />
+          {/* <MenuIcon /> */}
         </div>
       </div>
     </Template>
