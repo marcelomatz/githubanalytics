@@ -5,7 +5,7 @@ import { appTitle, appSubTitle } from "../../data/index";
 export default function Footer() {
   return (
     <Template>
-      <footer className="flex flex-col mx-auto w-full justify-between text-center items-center">
+      <footer className="flex flex-col mx-auto w-full justify-between text-center items-center text-white">
         <h2 className="text-2xl bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           <Link href={"/"}>
             <span className="font-bold">{appTitle}</span>
