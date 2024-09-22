@@ -6,11 +6,11 @@ export default function Hero() {
     <Template>
       <div className="text-center space-y-8 my-8">
         <h1 className="text-4xl md:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
-          The Profile | Dev
+          Construa seu Perfil Público e Conecte-se ao Futuro da Tecnologia
         </h1>
         <p className="text-xl md:text-2xl max-w-3xl mx-auto text-gray-300">
-          Crie o seu perfil público, compartilhe os seus projetos e encontre um
-          novo emprego na área de tecnologia.
+          Mostre seus projetos, descubra oportunidades de emprego e faça parte
+          de uma comunidade que impulsiona sua carreira.
         </p>
         <Button
           disabled
