@@ -23,7 +23,7 @@ export default function Hero() {
         >
           {ctaLinkTitle}
         </Link>
-        <span className="text-sm bg-pink-700 px-3 py-2 rounded-xl relative bottom-5 right-8 border-2 border-purple-700 font-normal">
+        <span className="text-sm text-zinc-100 bg-pink-700 px-3 py-2 rounded-xl relative bottom-5 right-8 border-2 border-purple-700 font-normal">
           Em breve
         </span>
       </div>
