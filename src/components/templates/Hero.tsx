@@ -1,11 +1,16 @@
 import Template from "./Template";
-import {ctaPrincipal, ctaSecondary, ctaLinkHref, ctaLinkTitle} from "../../data/HomePage/Hero"
+import {
+  ctaPrincipal,
+  ctaSecondary,
+  ctaLinkHref,
+  ctaLinkTitle,
+} from "../../data/HomePage/Hero";
 import Link from "next/link";
 
 export default function Hero() {
   return (
     <Template>
-      <div className="text-center">
+      <div className="text-center space-y-12 mt-10">
         <h1 className="text-4xl pb-4 md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           {ctaPrincipal}
         </h1>

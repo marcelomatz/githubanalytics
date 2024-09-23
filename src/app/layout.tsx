@@ -4,7 +4,6 @@ import "./globals.css";
 import Header from "../components/templates/Header";
 import Footer from "../components/templates/Footer";
 
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -17,13 +16,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "The Profile | Dev",
+  title: "The-GitHub | Comunidade Open-source",
   description:
-    "Crie o seu perfil público, compartilhe os seus projetos e encontre um novo emprego na área de tecnologia.",
+    "Mostre suas habilidades, descubra oportunidades incríveis de emprego e junte-se a uma comunidade open-source que impulsiona sua trajetória profissional.",
   openGraph: {
-    title: "The Profile | Dev",
+    title: "The-GitHub | Comunidade Open-source",
     description:
-      "Crie o seu perfil público, compartilhe os seus projetos e encontre um novo emprego na área de tecnologia.",
+      "Mostre suas habilidades, descubra oportunidades incríveis de emprego e junte-se a uma comunidade open-source que impulsiona sua trajetória profissional.",
   },
 };
 

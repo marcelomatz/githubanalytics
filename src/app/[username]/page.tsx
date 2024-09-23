@@ -2,10 +2,10 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import ProfileCard from "@/components/ProfileCard";
-import RepositoryList from "@/components/RepositoryList";
+import ProfileCard from "../../components/templates/ProfileCard";
+import RepositoryList from "../..//components/templates/RepositoryList";
 import { UserProfile, Repository } from "@/types";
-import { fetchUserData } from "@/components/UserDataFetcher";
+import { fetchUserData } from "../../components/actions/UserDataFetcher";
 
 export default function UserPage({ params }: { params: { username: string } }) {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
@@ -52,19 +52,14 @@ export default function UserPage({ params }: { params: { username: string } }) {
   if (loading) {
     return (
       <div className="sweet-loading">
-        <Suspense fallback={<div>Carregando...</div>}>
+        <Suspense
+          fallback={<div className="text-white text-4xl">Carregando...</div>}
+        >
           {userProfile && ( // Verifica se userProfile não é nulo
-            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
-          )}
-        </Suspense>
-        <Suspense fallback={<div>Carregando...</div>}>
-          {userProfile && ( // Verifica se userProfile não é nulo
-            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
-          )}
-        </Suspense>
-        <Suspense fallback={<div>Carregando...</div>}>
-          {userProfile && ( // Verifica se userProfile não é nulo
-            <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
+            <ProfileCard
+              userProfile={userProfile}
+              repositories={filteredRepos}
+            />
           )}
         </Suspense>
       </div>
@@ -75,7 +70,9 @@ export default function UserPage({ params }: { params: { username: string } }) {
 
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto mb-10 mt-10 p-4 xl:p-0">
-      <h1 className="text-3xl font-bold mb-6 text-background">Perfil de {params.username}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-background">
+        Perfil de {params.username}
+      </h1>
       {userProfile && (
         <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
       )}
@@ -92,7 +89,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
                 ).length;
                 const languageColor = `hsl(${Math.floor(
                   Math.random() * 360
-                )}, 90%, 70%)`;
+                )}, 40%, 60%)`;
                 return (
                   <span
                     key={language}

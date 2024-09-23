@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Repository } from "@/types";
-import RepositoryCard from "@/components/RepositoryCard";
+import RepositoryCard from "../../../components/templates/RepositoryCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -90,7 +90,9 @@ const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
               <ul className="space-y-2">
                 <li className="flex items-center text-foreground">
                   <Star className="mr-2 h-4 w-4" />
-                  <span className="font-medium">Stars: {repo.stargazers_count}</span>
+                  <span className="font-medium">
+                    Stars: {repo.stargazers_count}
+                  </span>
                 </li>
                 <li className="flex items-center text-foreground">
                   <GitFork className="mr-2 h-4 w-4" />
@@ -98,11 +100,15 @@ const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
                 </li>
                 <li className="flex items-center text-foreground">
                   <Eye className="mr-2 h-4 w-4" />
-                  <span className="font-medium">Watchers: {repo.watchers_count}</span>
+                  <span className="font-medium">
+                    Watchers: {repo.watchers_count}
+                  </span>
                 </li>
                 <li className="flex items-center text-foreground">
                   <MessageSquare className="mr-2 h-4 w-4" />
-                  <span className="font-medium">Issues abertas: {repo.open_issues_count}</span>
+                  <span className="font-medium">
+                    Issues abertas: {repo.open_issues_count}
+                  </span>
                 </li>
               </ul>
             </TabsContent>
@@ -159,7 +165,11 @@ export default function RepoPage({
         {repo && (
           <>
             <div className="flex space-x-4">
-              <Link href={`/${params.username}`} className="flex items-baseline gap-2" key={params.username}>
+              <Link
+                href={`/${params.username}`}
+                className="flex items-baseline gap-2"
+                key={params.username}
+              >
                 <ArrowLeftFromLineIcon />
                 <h1 className="text-3xl font-bold mb-6">
                   Perfil de {params.username}

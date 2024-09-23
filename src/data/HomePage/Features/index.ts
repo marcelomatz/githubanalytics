@@ -1,51 +1,53 @@
-export const featureTitle = "Conectando pessoas à oportunidades"
+export const featureTitle =
+  "Facilite conexões e conquiste o próximo passo na sua carreira!";
 
 export const features = [
   {
     icon: "🔍",
     title: "Busca Avançada",
     description:
-      "Encontre projetos relevantes com facilidade, utilizando filtros e palavras-chave para refinar sua pesquisa.",
+      "Encontre projetos e oportunidades de forma rápida e precisa, utilizando filtros inteligentes e palavras-chave para refinar sua pesquisa.",
   },
   {
     icon: "🤝",
     title: "Colaboração",
     description:
-      "Contribua para projetos open-source, interaja com outros desenvolvedores e aprenda com a comunidade.",
+      "Contribua para projetos open-source, conecte-se com desenvolvedores de todo o mundo e aprenda diretamente com a comunidade.",
   },
   {
-    icon: "📦",
+    icon: "📊",
     title: "Análise de Dados",
     description:
-      "Visualize estatísticas de repositórios e desenvolvedores, ajudando você a entender tendências e padrões.",
+      "Acesse insights detalhados sobre repositórios e desenvolvedores, ajudando você a identificar tendências e tomar decisões mais informadas.",
   },
   {
-    icon: "🚀",
+    icon: "🔗",
     title: "Integração",
     description:
-      "Conecte-se com outras ferramentas e serviços, otimizando seu fluxo de trabalho e aumentando sua produtividade.",
+      "Conecte sua conta a ferramentas e serviços populares, automatizando processos e melhorando sua produtividade.",
   },
   {
-    icon: "👥",
+    icon: "💼",
     title: "Empregos",
-    description: "Tenha o seu perfil e projetos encontrados por recrutadores.",
+    description:
+      "Seja descoberto por recrutadores e empresas que buscam seu talento. Destaque seu perfil e projetos para novas oportunidades.",
   },
   {
-    icon: "🚧",
+    icon: "📚",
     title: "Desenvolvimento",
     description:
-      "Aprenda novas habilidades e tecnologias, melhorando sua carreira como desenvolvedor.",
+      "Expanda suas habilidades e domine novas tecnologias para avançar na sua carreira como desenvolvedor.",
   },
   {
-    icon: "🚫",
+    icon: "🛡️",
     title: "Segurança",
     description:
-      "Aprenda a identificar e corrigir vulnerabilidades em seu código, garantindo a segurança de seus projetos.",
+      "Identifique e corrija vulnerabilidades no seu código, garantindo que seus projetos estejam sempre seguros e protegidos.",
   },
   {
-    icon: "🚀",
+    icon: "⚡",
     title: "Inovação",
     description:
-      "Explore as últimas tecnologias e tendências, mantendo-se atualizado com as inovações mais recentes.",
+      "Mantenha-se à frente explorando as tecnologias emergentes e as últimas tendências que estão moldando o futuro da tecnologia.",
   },
 ];

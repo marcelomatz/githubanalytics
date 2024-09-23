@@ -13,7 +13,7 @@ const UserSearchForm = () => {
     e.preventDefault();
     if (username) {
       router.push(`/${username.trim()}`);
-      setUsername('');
+      setUsername("");
     }
   };
 
@@ -28,9 +28,13 @@ const UserSearchForm = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
             aria-label="Nome de usuário do GitHub"
-            className="text-xs text-white"
+            className="text-xs text-white rounded-full border-purple-500 border-2"
           />
-          <Button type="submit" variant="secondary">
+          <Button
+            type="submit"
+            variant="ghost"
+            className="rounded-full bg-purple-600 text-zinc-100"
+          >
             Explorar Perfil
           </Button>
         </div>
