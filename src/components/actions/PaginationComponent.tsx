@@ -8,7 +8,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
@@ -25,7 +24,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   const endPage = Math.min(totalPages, startPage + maxPages - 1);
 
   return (
-    <Pagination className="">
+    <Pagination className="text-white">
       <PaginationContent className="">
         <PaginationItem>
           <PaginationPrevious onClick={() => onPageChange(currentPage - 1)} />

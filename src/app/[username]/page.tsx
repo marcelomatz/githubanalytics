@@ -1,16 +1,13 @@
 "use client";
 
 import { useState, useEffect, useReducer, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
 import ProfileCard from "../../components/templates/ProfileCard";
 import RepositoryList from "../../components/templates/RepositoryList";
-import { UserProfile, Repository } from "@/types";
+import { Repository } from "@/types";
 import { fetchUserData } from "../../components/actions/UserDataFetcher";
-import LoadingSpinner from "../../components/LoadingSpinner"; // Importando o LoadingSpinner
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { Language } from "@/types";
 
-// Hook personalizado para buscar dados do usuário
-// Utilizei o useReducer para gerenciar o estado do usuário e evitar o re-render desnecessário
 const useUserData = (username: string, selectedLanguage: string | null) => {
   const [state, dispatch] = useReducer(
     (state: any, action: any) => {
@@ -75,13 +72,15 @@ const useUserData = (username: string, selectedLanguage: string | null) => {
 
 export default function UserPage({ params }: { params: { username: string } }) {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-  const isFromHome = searchParams.get("from") === "home";
-
   const { userProfile, repos, filteredRepos, loading, error } = useUserData(
     params.username,
     selectedLanguage
   );
+
+  console.log("Loading:", loading);
+  console.log("Error:", error);
+  console.log("UserProfile:", userProfile);
+  console.log("Repos:", repos);
 
   if (loading) {
     return (
@@ -91,9 +90,10 @@ export default function UserPage({ params }: { params: { username: string } }) {
     );
   }
 
-  if (error) return <div>Erro: {error}</div>;
+  if (error) {
+    return <div>Erro: {error}</div>;
+  }
 
-  // Função para gerar a lista de linguagens
   const getLanguages = (repos: Repository[]): Language[] => {
     const languagesMap: { [key: string]: number } = {};
     repos.forEach((repo) => {
@@ -129,7 +129,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
           <div className="flex flex-wrap gap-2">
             {languages.map((language, index) => (
               <span
-                key={index} // Usar índice como chave
+                key={index}
                 className="bg-gray-200 text-gray-900/90 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded cursor-pointer"
                 style={{ backgroundColor: language.color }}
                 onClick={() => setSelectedLanguage(language.name)}

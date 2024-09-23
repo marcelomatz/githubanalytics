@@ -1,17 +1,13 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import { Repository } from "@/types";
-import RepositoryCard from "../../../components/templates/RepositoryCard";
-import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Star,
   GitFork,
@@ -21,19 +17,18 @@ import {
   GitBranch,
   MessageSquare,
   ArrowLeftFromLineIcon,
+  Globe,
+  Lock,
+  Unlock,
+  Archive,
+  Download,
+  BookOpen,
+  FolderKanban,
+  MessageCircleMore,
 } from "lucide-react";
 import Link from "next/link";
-
-async function getRepoData(
-  username: string,
-  reponame: string
-): Promise<Repository> {
-  const res = await fetch(
-    `https://api.github.com/repos/${username}/${reponame}`
-  );
-  if (!res.ok) throw new Error("Falha ao buscar dados do repositório");
-  return res.json();
-}
+import LoadingSpinner from "../../../components/LoadingSpinner"; // Importando o LoadingSpinner
+import { getRepoData } from "../../../components/actions/RepoDataFetcher"; // Importando o getRepoData
 
 const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
   const formatDate = (dateString: string) => {
@@ -47,18 +42,18 @@ const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
   return (
     <div>
       <Card>
+        <CardHeader>
+          <CardTitle>
+            <h1 className="text-2xl font-bold">{repo.name}</h1>
+          </CardTitle>
+          <CardDescription>
+            <h2 className="text-lg font-normal">{repo.description}</h2>
+          </CardDescription>
+        </CardHeader>
         <CardContent className="p-4">
-          <div className="flex flex-col text-md font-medium p-4 dark:text-foreground">
-            <p className="text-xs">Descrição do repositório:</p>
-            {repo.description || "Sem descrição"}
-          </div>
-          <Tabs defaultValue="details">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="details">Detalhes</TabsTrigger>
-              <TabsTrigger value="stats">Estatísticas</TabsTrigger>
-              <TabsTrigger value="extra">Extra</TabsTrigger>
-            </TabsList>
-            <TabsContent value="details">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Detalhes</h3>
               <ul className="space-y-2">
                 <li className="flex items-center space-x-2">
                   <Code className="h-5 w-5 text-foreground" />
@@ -84,9 +79,70 @@ const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
                     Branch padrão: {repo.default_branch}
                   </span>
                 </li>
+                <li className="flex items-center space-x-2">
+                  <Globe className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Homepage:{" "}
+                    {repo.homepage ? (
+                      <a
+                        href={repo.homepage}
+                        target="_blank"
+                        className="text-blue-500 hover:underline"
+                      >
+                        {repo.homepage}
+                      </a>
+                    ) : (
+                      "N/A"
+                    )}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  {repo.visibility === "public" ? (
+                    <Unlock className="h-5 w-5 text-foreground" />
+                  ) : (
+                    <Lock className="h-5 w-5 text-foreground" />
+                  )}
+                  <span className="font-medium">
+                    Visibilidade: {repo.visibility}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Archive className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Arquivado: {repo.archived ? "Sim" : "Não"}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Download className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Downloads:{" "}
+                    {repo.has_downloads ? "Habilitado" : "Desabilitado"}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Wiki: {repo.has_wiki ? "Habilitado" : "Desabilitado"}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <FolderKanban className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Projetos:{" "}
+                    {repo.has_projects ? "Habilitado" : "Desabilitado"}
+                  </span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircleMore className="h-5 w-5 text-foreground" />
+                  <span className="font-medium">
+                    Discussões:{" "}
+                    {repo.has_discussions ? "Habilitado" : "Desabilitado"}
+                  </span>
+                </li>
               </ul>
-            </TabsContent>
-            <TabsContent value="stats">
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold mb-2">Estatísticas</h3>
               <ul className="space-y-2">
                 <li className="flex items-center text-foreground">
                   <Star className="mr-2 h-4 w-4" />
@@ -110,19 +166,30 @@ const RepositoryDetails: React.FC<{ repo: Repository }> = ({ repo }) => {
                     Issues abertas: {repo.open_issues_count}
                   </span>
                 </li>
+                <li className="flex items-center text-foreground">
+                  <MessageSquare className="mr-2 h-4 w-4" />
+                  <span className="font-medium">
+                    Assinantes: {repo.subscribers_count}
+                  </span>
+                </li>
               </ul>
-            </TabsContent>
-            <TabsContent value="extra">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="description">
-                  <AccordionTrigger>Descrição</AccordionTrigger>
-                  <AccordionContent>
-                    {repo.description || "Sem descrição"}
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </TabsContent>
-          </Tabs>
+            </div>
+          </div>
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold mb-2">Tópicos</h3>
+            <div className="flex flex-wrap gap-2">
+              {repo.topics.length > 0
+                ? repo.topics.map((topic) => (
+                    <span
+                      key={topic}
+                      className="bg-gray-200 text-gray-900/90 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded"
+                    >
+                      {topic}
+                    </span>
+                  ))
+                : "Sem tópicos"}
+            </div>
+          </div>
           <div className="mt-4 flex justify-between items-center">
             <span className="text-sm text-muted-foreground">
               Tamanho: {(repo.size / 1024).toFixed(2)} MB
@@ -140,43 +207,53 @@ export default function RepoPage({
   params: { username: string; reponame: string };
 }) {
   const [repo, setRepo] = useState<Repository | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       setError(null);
       try {
         const repository = await getRepoData(params.username, params.reponame);
         setRepo(repository);
       } catch (err) {
         setError((err as Error).message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [params.username, params.reponame]);
 
+  if (loading) {
+    return (
+      <div className="sweet-loading">
+        <LoadingSpinner /> {/* Usando o LoadingSpinner */}
+      </div>
+    );
+  }
+
   if (error) return <div>Erro: {error}</div>;
 
   return (
     <div className="flex flex-col w-full items-center mx-auto p-4">
       <div className="w-full max-w-7xl">
-        {error && <div className="text-red-500">Erro: {error}</div>}
         {repo && (
           <>
             <div className="flex space-x-4">
               <Link
-                href={`/${params.username}`}
+                href={`/${repo.owner.login}`}
                 className="flex items-baseline gap-2"
-                key={params.username}
+                key={repo.owner.login}
               >
                 <ArrowLeftFromLineIcon />
                 <h1 className="text-3xl font-bold mb-6">
-                  Perfil de {params.username}
+                  Perfil de {repo.owner.login}
                 </h1>
               </Link>
             </div>
-            <RepositoryCard repo={repo} />
             <RepositoryDetails repo={repo} />
           </>
         )}

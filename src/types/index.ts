@@ -34,6 +34,18 @@ export interface Repository {
   license: {
     name: string;
   } | null;
+  homepage?: string;
+  visibility: string;
+  has_issues: boolean;
+  has_projects: boolean;
+  has_downloads: boolean;
+  has_wiki: boolean;
+  has_pages: boolean;
+  has_discussions: boolean;
+  archived: boolean;
+  disabled: boolean;
+  open_issues: number;
+  subscribers_count: number;
 }
 
 export interface CommitData {
