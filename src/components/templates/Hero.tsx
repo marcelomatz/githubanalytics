@@ -19,11 +19,11 @@ export default function Hero() {
         </p>
         <Link
           href={ctaLinkHref}
-          className="bg-purple-600/50 ml-12 cursor-default text-white/50 font-bold py-3 px-8 rounded-full text-lg"
+          className="bg-purple-600/50 ml-12 cursor-default text-white font-bold py-3 px-8 rounded-full text-lg"
         >
           {ctaLinkTitle}
         </Link>
-        <span className="text-sm bg-pink-600 px-2 py-1 rounded-xl relative bottom-5 right-8 border-2 border-purple-800 shadow-lg shadow-purple-600">
+        <span className="text-sm bg-pink-700 px-3 py-2 rounded-xl relative bottom-5 right-8 border-2 border-purple-700 font-normal">
           Em breve
         </span>
       </div>

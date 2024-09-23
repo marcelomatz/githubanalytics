@@ -18,7 +18,7 @@ export default function Footer() {
         </p>
         <p className="text-sm mt-2">
           Desenvolvido por:{" "}
-          <Link href="/marcelomatzx" className="hover:underline">
+          <Link href="/marcelomatz" className="hover:underline">
             Marcelo Matz
           </Link>
         </p>
