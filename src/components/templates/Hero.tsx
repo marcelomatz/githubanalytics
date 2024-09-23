@@ -14,7 +14,7 @@ export default function Hero() {
         <h1 className="text-4xl pb-4 md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           {ctaPrincipal}
         </h1>
-        <p className="text-lg sm:text-xl pb-10 md:text-2xl max-w-2xl mx-auto text-gray-300">
+        <p className="text-lg sm:text-xl pb-10 md:text-2xl max-w-3xl mx-auto text-gray-300">
           {ctaSecondary}
         </p>
         <Link

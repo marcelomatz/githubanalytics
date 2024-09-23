@@ -5,7 +5,7 @@ export default function Features() {
   return (
     <Template>
       <span className="mb-16">
-        <h2 className="text-xl sm:text-3xl text-center font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+        <h2 className="text-xl mt-14 sm:text-3xl text-center font-semibold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
           {featureTitle}
         </h2>
       </span>
