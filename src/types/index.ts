@@ -63,3 +63,31 @@ export interface Language {
   count: number;
   color: string;
 }
+
+export interface IssueDetailsProps {
+  issues: RepositoryListProps;
+}
+
+export interface RepositoryIssue {
+  id: number;
+  number: number;
+  title: string;
+  body: string;
+  state: "open" | "closed";
+  user: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+  };
+  labels: Array<{
+    id: number;
+    name: string;
+    color: string;
+  }>;
+  comments: number;
+  created_at: string;
+  updated_at: string;
+  closed_at: string | null;
+  html_url: string;
+}
