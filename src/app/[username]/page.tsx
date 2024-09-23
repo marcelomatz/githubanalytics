@@ -1,107 +1,142 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, useReducer, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import ProfileCard from "../../components/templates/ProfileCard";
-import RepositoryList from "../..//components/templates/RepositoryList";
+import RepositoryList from "../../components/templates/RepositoryList";
 import { UserProfile, Repository } from "@/types";
 import { fetchUserData } from "../../components/actions/UserDataFetcher";
+import LoadingSpinner from "../../components/LoadingSpinner"; // Importando o LoadingSpinner
+import { Language } from "@/types";
 
-export default function UserPage({ params }: { params: { username: string } }) {
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [repos, setRepos] = useState<Repository[]>([]);
-  const [filteredRepos, setFilteredRepos] = useState<Repository[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
-
-  const searchParams = useSearchParams();
-  const isFromHome = searchParams.get("from") === "home";
+// Hook personalizado para buscar dados do usuário
+// Utilizei o useReducer para gerenciar o estado do usuário e evitar o re-render desnecessário
+const useUserData = (username: string, selectedLanguage: string | null) => {
+  const [state, dispatch] = useReducer(
+    (state: any, action: any) => {
+      switch (action.type) {
+        case "FETCH_INIT":
+          return { ...state, loading: true, error: null };
+        case "FETCH_SUCCESS":
+          return {
+            ...state,
+            loading: false,
+            userProfile: action.payload.profile,
+            repos: action.payload.repositories,
+            filteredRepos: action.payload.repositories,
+          };
+        case "FETCH_FAILURE":
+          return { ...state, loading: false, error: action.payload };
+        case "SET_FILTERED_REPOS":
+          return { ...state, filteredRepos: action.payload };
+        default:
+          return state;
+      }
+    },
+    {
+      userProfile: null,
+      repos: [],
+      filteredRepos: [],
+      loading: true,
+      error: null,
+    }
+  );
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      setError(null);
+      dispatch({ type: "FETCH_INIT" });
       try {
-        const response = await fetchUserData(params.username);
+        const response = await fetchUserData(username);
         if (!response || !response.profile || !response.repositories) {
           throw new Error("Dados inválidos recebidos da API.");
         }
-        const { profile, repositories } = response;
-        setUserProfile(profile);
-        setRepos(repositories);
-        // Filtrar repositórios com base na linguagem selecionada
-        if (selectedLanguage) {
-          const filtered = repositories.filter(
-            (repo) => repo.language === selectedLanguage
-          );
-          setFilteredRepos(filtered);
-        } else {
-          setFilteredRepos(repositories);
-        }
+        dispatch({ type: "FETCH_SUCCESS", payload: response });
       } catch (err) {
-        setError((err as Error).message);
-      } finally {
-        setLoading(false);
+        dispatch({ type: "FETCH_FAILURE", payload: (err as Error).message });
       }
     };
 
     fetchData();
-  }, [params.username, isFromHome, selectedLanguage]);
+  }, [username]);
+
+  useEffect(() => {
+    if (selectedLanguage) {
+      const filtered = state.repos.filter(
+        (repo: Repository) => repo.language === selectedLanguage
+      );
+      dispatch({ type: "SET_FILTERED_REPOS", payload: filtered });
+    } else {
+      dispatch({ type: "SET_FILTERED_REPOS", payload: state.repos });
+    }
+  }, [selectedLanguage, state.repos]);
+
+  return state;
+};
+
+export default function UserPage({ params }: { params: { username: string } }) {
+  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const isFromHome = searchParams.get("from") === "home";
+
+  const { userProfile, repos, filteredRepos, loading, error } = useUserData(
+    params.username,
+    selectedLanguage
+  );
 
   if (loading) {
     return (
       <div className="sweet-loading">
-        <Suspense
-          fallback={<div className="text-white text-4xl">Carregando...</div>}
-        >
-          {userProfile && ( // Verifica se userProfile não é nulo
-            <ProfileCard
-              userProfile={userProfile}
-              repositories={filteredRepos}
-            />
-          )}
-        </Suspense>
+        <LoadingSpinner /> {/* Usando o LoadingSpinner */}
       </div>
     );
   }
 
   if (error) return <div>Erro: {error}</div>;
 
+  // Função para gerar a lista de linguagens
+  const getLanguages = (repos: Repository[]): Language[] => {
+    const languagesMap: { [key: string]: number } = {};
+    repos.forEach((repo) => {
+      if (repo.language) {
+        languagesMap[repo.language] = (languagesMap[repo.language] || 0) + 1;
+      }
+    });
+
+    return Object.keys(languagesMap).map((language) => ({
+      name: language,
+      count: languagesMap[language],
+      color: `hsl(${Math.floor(Math.random() * 360)}, 40%, 60%)`,
+    }));
+  };
+
+  const languages = getLanguages(repos);
+
   return (
     <div className="flex flex-col w-full max-w-7xl mx-auto mb-10 mt-10 p-4 xl:p-0">
       <h1 className="text-3xl font-bold mb-6 text-background">
         Perfil de {params.username}
       </h1>
-      {userProfile && (
-        <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
-      )}
+      <Suspense fallback={<LoadingSpinner />}>
+        {userProfile && (
+          <ProfileCard userProfile={userProfile} repositories={filteredRepos} />
+        )}
+      </Suspense>
       <div className="w-full mt-4 mb-4 flex justify-between">
         <div>
           <h3 className="text-lg font-semibold mb-2 text-background">
             Linguagens de programação mais usadas por {params.username}:
           </h3>
           <div className="flex flex-wrap gap-2">
-            {Array.from(new Set(repos.map((repo) => repo.language))).map(
-              (language) => {
-                const languageCount = repos.filter(
-                  (repo) => repo.language === language
-                ).length;
-                const languageColor = `hsl(${Math.floor(
-                  Math.random() * 360
-                )}, 40%, 60%)`;
-                return (
-                  <span
-                    key={language}
-                    className="bg-gray-200 text-gray-900/90 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded cursor-pointer"
-                    style={{ backgroundColor: languageColor }}
-                    onClick={() => setSelectedLanguage(language || null)}
-                  >
-                    {language} ({languageCount})
-                  </span>
-                );
-              }
-            )}
+            {languages.map((language, index) => (
+              <span
+                key={index} // Usar índice como chave
+                className="bg-gray-200 text-gray-900/90 text-sm font-medium mr-2 mb-2 px-2.5 py-0.5 rounded cursor-pointer"
+                style={{ backgroundColor: language.color }}
+                onClick={() => setSelectedLanguage(language.name)}
+              >
+                {language.name} ({language.count})
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -118,7 +153,12 @@ export default function UserPage({ params }: { params: { username: string } }) {
         Total de repositórios: {filteredRepos.length}{" "}
         {selectedLanguage ? `filtrados por ${selectedLanguage}` : ""}
       </p>
-      <RepositoryList repositories={filteredRepos} username={params.username} />{" "}
+      <Suspense fallback={<LoadingSpinner />}>
+        <RepositoryList
+          repositories={filteredRepos}
+          username={params.username}
+        />
+      </Suspense>
     </div>
   );
 }
